@@ -8,7 +8,6 @@ class Customer < ApplicationRecord
 	validates :postal_code, presence: true
 	validates :phone, presence: true
 
-
 	private
 
 	def date_in_future_or_error

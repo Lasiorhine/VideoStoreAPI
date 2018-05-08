@@ -1,2 +1,3 @@
 class CustomersController < ApplicationController
+	
 end
