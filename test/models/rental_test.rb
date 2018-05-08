@@ -62,14 +62,19 @@ describe Rental do
 
     it "must not allow check in date before created_at" do
       rental.update(created_at: "2017-02-04")
-
-      # rental.must_be :valid? # just checking to be sure
       rental.update(check_in_date: "2017-02-03")
-
       rental.valid?.must_equal false
       rental.errors.keys.must_equal [:check_in_date]
     end
 
-  end
+  end # end of VALIDATION
+
+  # CHECK_OUT_DATE =============================================================
+  # describe "valid" do
+  #   it "must be valid" do
+  #     rental.must_be :valid?
+  #   end
+  # end
+
 
 end
