@@ -1,0 +1,17 @@
+ada:
+  name: Ada Lovelace
+  registered_at: Wed, 16 Apr 2017 21:40:20 -0700
+  address: 123 Developers Academy Way
+  city: Seattle
+  state: WA
+  postal_code: 98102
+  phone: (206) 949-6758
+
+grace:
+  name: Grace Hopper
+  registered_at: Mon, 30 Apr 2019 21:40:20 -0700
+  address: 42 Pi Street
+  city: Atlanta
+  state: GA
+  postal_code: 30064
+  phone: (770) 951-1599
