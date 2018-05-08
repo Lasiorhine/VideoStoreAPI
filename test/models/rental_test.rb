@@ -69,12 +69,20 @@ describe Rental do
 
   end # end of VALIDATION
 
-  # CHECK_OUT_DATE =============================================================
-  # describe "valid" do
-  #   it "must be valid" do
-  #     rental.must_be :valid?
-  #   end
-  # end
+  # get_check_out_date =============================================================
+  describe "get_check_out_date" do
+    it "has a get_check_out_date" do
+      rental.must_respond_to :get_check_out_date
+    end
+
+    it "has a checkout date that is a Date" do
+      rental.get_check_out_date.must_be_kind_of Date
+    end
+
+    it "sets its get_check_out_date to be the date created" do
+      rental.get_check_out_date.must_equal rental.created_at.to_date
+    end
+  end
 
 
 end
