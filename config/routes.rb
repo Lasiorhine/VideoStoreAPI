@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get 'movies/create'
 
 	get '/zomg', to: 'application#zomg', as: 'zomg'
+	resources :customers, only: :index
 end
