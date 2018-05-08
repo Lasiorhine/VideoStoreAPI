@@ -1,5 +1,7 @@
 class Movie < ApplicationRecord
 
+  attr_accessor :available_inventory
+
   has_many :rentals
 
 	validates :title, presence: true, uniqueness: true
@@ -7,4 +9,9 @@ class Movie < ApplicationRecord
   validates :release_date, presence: true
   validates :inventory, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  def available_inventory
+    #Note:  This is a placeholder method, and it's here just so that Movie's show method will serve the right stuff.  It will have to evolve in later waves.
+
+    self.inventory
+  end
 end

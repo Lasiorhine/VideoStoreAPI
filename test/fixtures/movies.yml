@@ -17,17 +17,17 @@ day:
   inventory: 10
 breakfast:
   title: Breakfast at Tiffany's
-  overview: The original manic, pixie dreamgirl takes Manhattan
+  overview: The original manic pixie dreamgirl takes Manhattan
   release_date: 1961-04-11
   inventory: 2
 backbone:
   title: The Devil's Backbone
-  overview: As close as Guillermo del Toro ever gets to 'understated'.
+  overview: As close as Guillermo del Toro ever gets to understatement.
   release_date: 2001-04-20
   inventory: 5
 get:
   title: Get Out
-  overview: The truest horror movie you'll ever see.
+  overview: We have met the enemy and he is us.
   release_date: 2017-02-24
   inventory: 15
 once:
@@ -52,6 +52,6 @@ wanda:
   inventory: 1
 lights:
   title: City Lights
-  overview: The Little Tramp's best and most heartbreaking work.
+  overview: The Little Tramp's most heartbreaking work. This cut lacks the legendary drain-poking scene.
   release_date: 1931-03-07
   inventory: 1

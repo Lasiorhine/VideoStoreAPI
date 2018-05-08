@@ -54,6 +54,7 @@ describe Movie do
 
     it "has validation for release_date's status as a Date object" do
 
+      skip
       #THIS IS A DRAFT TEST.
 
       day.release_date = "July Fourth, ninety-six"
@@ -75,16 +76,50 @@ describe Movie do
       day.errors.messages.must_include :inventory
     end
 
-    it "has validation for release_date's status as an integer" do
+    it "has validation for inventory's status as a postive integer" do
+
+      day.inventory = 0
+      day.valid?.must_equal true
 
       day.inventory = "three on-hand"
       day.valid?.must_equal false
       day.errors.messages.must_include :inventory
 
-      day.release_date = 3.1415
+      day.inventory = 3.1415
+      day.valid?.must_equal false
+      day.errors.messages.must_include :inventory
+
+      day.inventory = -7
       day.valid?.must_equal false
       day.errors.messages.must_include :inventory
     end
+
+  end
+
+  describe "methods" do
+
+    describe "available_inventory" do
+
+      let(:breakfast) { movies(:breakfast)}
+
+      it "returns the correct figure for a given movie with one or more copies available" do
+
+        day.available_inventory.must_equal 10
+
+      end
+
+      it "returns the correct figure for a given movie with zero copies available" do
+
+        #This version of this test is sort of a place-holder: Once we get checkout mechanisms working in wave 3 and later, it will have to be dramatically redone.
+
+        breakfast.inventory = 0
+
+        breakfast.available_inventory.must_equal 0
+
+      end
+
+    end
+
 
   end
 
