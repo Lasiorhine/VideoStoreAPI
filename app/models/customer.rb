@@ -1,4 +1,5 @@
 class Customer < ApplicationRecord
+
  	validates :name, presence: true
 	validate :date_in_future_or_error
 	validates :address, presence: true
