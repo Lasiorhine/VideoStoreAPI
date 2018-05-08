@@ -42,31 +42,32 @@ describe Rental do
       info[:check_in_date] = nil
       rental = Rental.create(info)
       rental.must_be :valid?
+      rental.check_in_date.must_be_nil
+
     end
 
-    it "must allow check_in_date to change from nil" do
-      info[:check_in_date] = nil
+    it "must allow check_in_date of today" do
+      info[:check_in_date] = Date.today
       rental = Rental.create(info)
-      # puts "_____"
-      # puts rental.inspect
-
-      rental.update(check_in_date: Date.today)
       rental.must_be :valid?
-      # puts rental.errors.inspect
+      rental.check_in_date.must_equal Date.today
     end
 
-    it "must not allow invalid check_in_date" do
+    it "must not allow check in date after today" do
       info[:check_in_date] = Date.tomorrow
       bad_rental = Rental.create(info)
       bad_rental.valid?.must_equal false
       bad_rental.errors.keys.must_equal [:check_in_date]
     end
 
-    it "must not allow invalid check_in_date" do
-      info[:check_in_date] = Date.tomorrow
-      bad_rental = Rental.new(info)
-      bad_rental.valid?.must_equal false
-      bad_rental.errors.keys.must_equal [:check_in_date]
+    it "must not allow check in date before created_at" do
+      rental.update(created_at: "2017-02-04")
+
+      # rental.must_be :valid? # just checking to be sure
+      rental.update(check_in_date: "2017-02-03")
+
+      rental.valid?.must_equal false
+      rental.errors.keys.must_equal [:check_in_date]
     end
 
   end

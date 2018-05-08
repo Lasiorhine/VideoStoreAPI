@@ -3,8 +3,7 @@ class Rental < ApplicationRecord
   belongs_to :movie
 
 
-  validates :check_in_date, inclusion: { :in => (Date.new(2013,12,31)..Date.today) },
-		                        allow_nil: true
+  validate :valid_check_in_date
 
   # def self.check_out_date
   #   return created_at.to_date
@@ -27,8 +26,11 @@ class Rental < ApplicationRecord
 private
 
   def valid_check_in_date
-    if !check_in_date.nil? && check_in_date > Date.today
+    return if check_in_date.nil?
+    if check_in_date > Date.today || (!created_at.nil? && check_in_date < created_at.to_date)
       errors.add(:check_in_date, "Invalid check-in")
     end
+
+
   end
 end
