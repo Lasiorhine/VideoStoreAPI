@@ -21,6 +21,7 @@ describe Rental do
       rental.check_in_date.must_be_nil
     end
 
+    # relationships ------------------------------------------------------------
     it "must have relationships with customer" do
       rental.must_respond_to :customer
       rental.customer.must_equal customers(:ada)
@@ -36,10 +37,38 @@ describe Rental do
       rental.movie.customers.must_include rental.customer # through relationship
     end
 
-  # # check_in_date
-  #   it "must be valid" do
-  #     rental.must_be :valid?
-  #   end
+    # check_in_date ------------------------------------------------------------
+    it "must allow nil check_in_date" do
+      info[:check_in_date] = nil
+      rental = Rental.create(info)
+      rental.must_be :valid?
+    end
+
+    it "must allow check_in_date to change from nil" do
+      info[:check_in_date] = nil
+      rental = Rental.create(info)
+      # puts "_____"
+      # puts rental.inspect
+
+      rental.update(check_in_date: Date.today)
+      rental.must_be :valid?
+      # puts rental.errors.inspect
+    end
+
+    it "must not allow invalid check_in_date" do
+      info[:check_in_date] = Date.tomorrow
+      bad_rental = Rental.create(info)
+      bad_rental.valid?.must_equal false
+      bad_rental.errors.keys.must_equal [:check_in_date]
+    end
+
+    it "must not allow invalid check_in_date" do
+      info[:check_in_date] = Date.tomorrow
+      bad_rental = Rental.new(info)
+      bad_rental.valid?.must_equal false
+      bad_rental.errors.keys.must_equal [:check_in_date]
+    end
+
   end
 
 end

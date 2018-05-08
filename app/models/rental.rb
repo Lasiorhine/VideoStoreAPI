@@ -2,13 +2,9 @@ class Rental < ApplicationRecord
   belongs_to :customer
   belongs_to :movie
 
-  # after_commit :decrease_inventory, on: create
 
-  # First video
-  validate :valid_check_in_date
-
-  # validates :check_in_date, inclusion: { in: [true, false] },
-                          # exclusion: { in: [nil] }
+  validates :check_in_date, inclusion: { :in => (Date.new(2013,12,31)..Date.today) },
+		                        allow_nil: true
 
   # def self.check_out_date
   #   return created_at.to_date
@@ -28,19 +24,11 @@ class Rental < ApplicationRecord
   #   movie.available_inventory += 1
   # end
 
-  private
+private
 
-    # def self.decrease_inventory
-    #   movie.available_inventory += 1
-    # end
-
-
-    def valid_check_in_date
-      if !check_in_date.nil? && check_in_date > Date.today
-        errors.add("Invalid check-in")
-      end
-      errors.add("Cannot change check-in date") if check_in_date
+  def valid_check_in_date
+    if !check_in_date.nil? && check_in_date > Date.today
+      errors.add(:check_in_date, "Invalid check-in")
     end
-
-
+  end
 end
