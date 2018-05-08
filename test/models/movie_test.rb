@@ -54,6 +54,8 @@ describe Movie do
 
     it "has validation for release_date's status as a Date object" do
 
+      #THIS IS A DRAFT TEST.
+
       day.release_date = "July Fourth, ninety-six"
       day.valid?.must_equal false
       day.errors.messages.must_include :release_date
