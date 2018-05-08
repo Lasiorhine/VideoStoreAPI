@@ -64,6 +64,11 @@ describe Customer do
       Customer.create(info).valid?.must_equal true
     end
 
+    it "must allow name of one character" do
+      info[:name] = "a"
+      Customer.create(info).valid?.must_equal true
+    end
+
     # registered_at ------------------------------------------------------------
     it "must not validate with an invalid registered_at" do
       info[:registered_at] = nil
@@ -83,6 +88,44 @@ describe Customer do
       Customer.create(info).valid?.must_equal true
 
       info[:registered_at] = DateTime.yesterday
+      Customer.create(info).valid?.must_equal true
+    end
+
+    # address ------------------------------------------------------------------
+    it "must not validate with an invalid address" do
+      info[:address] = nil
+      customer = Customer.create(info)
+      customer.valid?.must_equal false
+      customer.errors.keys.must_equal [:address]
+
+      info[:address] = "   "
+      Customer.create(info).valid?.must_equal false
+
+      info[:address] = ""
+      Customer.create(info).valid?.must_equal false
+    end
+
+    it "must allow address of one character" do
+      info[:address] = "a"
+      Customer.create(info).valid?.must_equal true
+    end
+
+    # city ---------------------------------------------------------------------
+    it "must not validate with an invalid city" do
+      info[:city] = nil
+      customer = Customer.create(info)
+      customer.valid?.must_equal false
+      customer.errors.keys.must_equal [:city]
+
+      info[:city] = "   "
+      Customer.create(info).valid?.must_equal false
+
+      info[:city] = ""
+      Customer.create(info).valid?.must_equal false
+    end
+
+    it "must allow city of one character" do
+      info[:city] = "a"
       Customer.create(info).valid?.must_equal true
     end
 

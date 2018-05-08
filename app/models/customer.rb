@@ -1,12 +1,11 @@
 class Customer < ApplicationRecord
  	validates :name, presence: true
 	validate :date_in_future_or_error
-
-	# validates :address
-	# validates :city
-	# validates :state
-	# validates :postal_code
-	# validates :phone
+	validates :address, presence: true
+	validates :city, presence: true
+	# validates :state, presence: true
+	# validates :postal_code, presence: true
+	# validates :phone, presence: true
 
 
 	private
