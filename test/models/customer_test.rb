@@ -8,7 +8,7 @@ describe Customer do
     let(:info) {
       {
         name: "Kathryn",
-        registered_at: DateTime.new("Wed, 16 Apr 2017 21:40:20 -0700"),
+        registered_at: "Wed, 16 Apr 2017 21:40:20 -0700",
         address: "321 Foo Street",
         city: "Seattle",
         state: "Washington",
@@ -46,8 +46,22 @@ describe Customer do
     end
 
     # name ---------------------------------------------------------------------
-    it "must be valid" do
-      customers(:ada).must_be :valid?
+    it "must not validate with an invalid name" do
+      info[:name] = nil
+      customer = Customer.create(info)
+      customer.valid?.must_equal false
+      customer.errors.keys.must_equal [:name]
+
+      info[:name] = "   "
+      Customer.create(info).valid?.must_equal false
+
+      info[:name] = ""
+      Customer.create(info).valid?.must_equal false
+    end
+
+    it "must allow duplicate name" do
+      info[:name] = customers(:ada).name
+      Customer.create(info).valid?.must_equal true
     end
 
   end # end of describe "validate"
