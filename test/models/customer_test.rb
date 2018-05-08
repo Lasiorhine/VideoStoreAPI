@@ -1,9 +1,54 @@
 require "test_helper"
 
 describe Customer do
-  let(:customer) { Customer.new }
 
-  it "must be valid" do
-    value(customer).must_be :valid?
-  end
+  # VALIDATE ===================================================================
+  describe "validate" do
+    let(:customer) { customers(:ada) }
+    let(:info) {
+      {
+        name: "Kathryn",
+        registered_at: DateTime.new("Wed, 16 Apr 2017 21:40:20 -0700"),
+        address: "321 Foo Street",
+        city: "Seattle",
+        state: "Washington",
+        postal_code: "12345",
+        phone: "(206) 123-4567"
+      }
+    }
+
+    # general ------------------------------------------------------------------
+    it "must be valid" do
+      customers(:ada).must_be :valid?
+    end
+
+    it "must respond correctly after validation" do
+      customer.must_respond_to :name
+      customer.name.must_equal customers(:ada).name
+
+      customer.must_respond_to :registered_at
+      customer.registered_at.must_equal customers(:ada).registered_at
+
+      customer.must_respond_to :address
+      customer.address.must_equal customers(:ada).address
+
+      customer.must_respond_to :city
+      customer.city.must_equal customers(:ada).city
+
+      customer.must_respond_to :state
+      customer.state.must_equal customers(:ada).state
+
+      customer.must_respond_to :postal_code
+      customer.postal_code.must_equal customers(:ada).postal_code
+
+      customer.must_respond_to :phone
+      customer.phone.must_equal customers(:ada).phone
+    end
+
+    # name ---------------------------------------------------------------------
+    it "must be valid" do
+      customers(:ada).must_be :valid?
+    end
+
+  end # end of describe "validate"
 end
