@@ -1,7 +1,10 @@
 require "test_helper"
 
 describe CustomersController do
-  # it "must be a real test" do
-  #   flunk "Need real tests"
-  # end
+	describe "index" do
+		it "must get the index" do
+			get customers_path
+			must_respond_with :ok
+		end
+	end
 end
