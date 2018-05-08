@@ -64,5 +64,27 @@ describe Customer do
       Customer.create(info).valid?.must_equal true
     end
 
+    # registered_at ------------------------------------------------------------
+    it "must not validate with an invalid registered_at" do
+      info[:registered_at] = nil
+      customer = Customer.create(info)
+      customer.valid?.must_equal false
+      customer.errors.keys.must_equal [:registered_at]
+
+      info[:registered_at] = DateTime.now + 1
+      Customer.create(info).valid?.must_equal false
+
+      info[:registered_at] = "foo"
+      Customer.create(info).valid?.must_equal false
+    end
+
+    it "must allow registered_at today or before" do
+      info[:registered_at] = DateTime.now
+      Customer.create(info).valid?.must_equal true
+
+      info[:registered_at] = DateTime.yesterday
+      Customer.create(info).valid?.must_equal true
+    end
+
   end # end of describe "validate"
 end
