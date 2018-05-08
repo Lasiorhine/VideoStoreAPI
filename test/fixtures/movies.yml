@@ -13,5 +13,45 @@
 day:
   title: Independents Day
   overview: The best worst movie ever
-  :release_date: 1996-07-04
+  release_date: 1996-07-04
   inventory: 10
+breakfast:
+  title: Breakfast at Tiffany's
+  overview: The original manic, pixie dreamgirl takes Manhattan
+  release_date: 1961-04-11
+  inventory: 2
+backbone:
+  title: The Devil's Backbone
+  overview: As close as Guillermo del Toro ever gets to 'understated'.
+  release_date: 2001-04-20
+  inventory: 5
+get:
+  title: Get Out
+  overview: The truest horror movie you'll ever see.
+  release_date: 2017-02-24
+  inventory: 15
+once:
+  title: Once Upon a Time in Anatolia
+  overview: Want to watch something really long? Here you go!!
+  release_date: 2011-09-23
+  inventory: 1
+synedoche:
+  title: Synecdoche, New York
+  overview: Of all Charlie Kauffman movies, this is the Charlie Kauffman-est.
+  release_date: 2008-11-21
+  inventory: 3
+after:
+  title: After Last Season
+  overview: Some movies are so bad, they're good.  And some movies are much, much worse.
+  release_date: 2009-06-05
+  inventory: 12
+wanda:
+  title: Wanda
+  overview: Rarely seen, feminist touchstone crime film.
+  release_date: 1974-02-28
+  inventory: 1
+lights:
+  title: City Lights
+  overview: The Little Tramp's best and most heartbreaking work.
+  release_date: 1931-03-07
+  inventory: 1
