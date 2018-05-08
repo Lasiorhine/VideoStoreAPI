@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+get_rental:
   check_out_date: 2018-05-07
-  due_date: 2018-05-07
-  check_in_date: 2018-05-07
+  movie: get
+  customer: ada
 
-two:
+day_rental:
   check_out_date: 2018-05-07
-  due_date: 2018-05-07
-  check_in_date: 2018-05-07
+  movie: day
+  customer: grace
