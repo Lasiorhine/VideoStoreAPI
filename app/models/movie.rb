@@ -3,6 +3,7 @@ class Movie < ApplicationRecord
   attr_accessor :available_inventory
 
   has_many :rentals
+  has_many :customers, through: :rentals
 
 	validates :title, presence: true, uniqueness: true
   validates :overview, presence: true
