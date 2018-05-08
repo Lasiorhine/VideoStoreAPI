@@ -3,9 +3,9 @@ class Customer < ApplicationRecord
 	validate :date_in_future_or_error
 	validates :address, presence: true
 	validates :city, presence: true
-	# validates :state, presence: true
-	# validates :postal_code, presence: true
-	# validates :phone, presence: true
+	validates :state, presence: true
+	validates :postal_code, presence: true
+	validates :phone, presence: true
 
 
 	private

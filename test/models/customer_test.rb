@@ -129,5 +129,62 @@ describe Customer do
       Customer.create(info).valid?.must_equal true
     end
 
+    # state ---------------------------------------------------------------------
+    it "must not validate with an invalid state" do
+      info[:state] = nil
+      customer = Customer.create(info)
+      customer.valid?.must_equal false
+      customer.errors.keys.must_equal [:state]
+
+      info[:state] = "   "
+      Customer.create(info).valid?.must_equal false
+
+      info[:state] = ""
+      Customer.create(info).valid?.must_equal false
+    end
+
+    it "must allow state of one character" do
+      info[:state] = "a"
+      Customer.create(info).valid?.must_equal true
+    end
+
+    # postal_code --------------------------------------------------------------
+    it "must not validate with an invalid postal_code" do
+      info[:postal_code] = nil
+      customer = Customer.create(info)
+      customer.valid?.must_equal false
+      customer.errors.keys.must_equal [:postal_code]
+
+      info[:postal_code] = "   "
+      Customer.create(info).valid?.must_equal false
+
+      info[:postal_code] = ""
+      Customer.create(info).valid?.must_equal false
+    end
+
+    it "must allow postal_code of one character" do
+      info[:postal_code] = "1"
+      Customer.create(info).valid?.must_equal true
+    end
+
+    # phone --------------------------------------------------------------------
+    it "must not validate with an invalid phone" do
+      info[:phone] = nil
+      customer = Customer.create(info)
+      customer.valid?.must_equal false
+      customer.errors.keys.must_equal [:phone]
+
+      info[:phone] = "   "
+      Customer.create(info).valid?.must_equal false
+
+      info[:phone] = ""
+      Customer.create(info).valid?.must_equal false
+    end
+
+    it "must allow phone of one character" do
+      info[:phone] = "2"
+      Customer.create(info).valid?.must_equal true
+    end
+
   end # end of describe "validate"
 end
