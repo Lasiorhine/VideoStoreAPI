@@ -1,9 +1,41 @@
 require "test_helper"
 
 describe Rental do
-  let(:rental) { Rental.new }
+  let(:rental) { rentals(:ada_get) }
+  let(:info) {
+    {
+      check_in_date: "2018-05-07",
+      movie: movies(:breakfast),
+      customer: customers(:grace)
+    }
+  }
 
-  it "must be valid" do
-    value(rental).must_be :valid?
+  # VALIDATION =================================================================
+  describe "valid" do
+    it "must be valid" do
+      rental.must_be :valid?
+    end
+
+    it "must respond correctly" do
+      rental.must_respond_to :check_in_date
+      rental.check_in_date.must_be_nil
+    end
+
+    it "must have relationships" do
+      rental.must_respond_to :customer
+      rental.customer.must_equal customers(:ada)
+      rental.customer.must_be_kind_of Customer
+
+      rental.must_respond_to :movie
+      rental.movie.must_equal movies(:get)
+      rental.movie.must_be_kind_of Movie
+
+    end
+
+  # # check_in_date
+  #   it "must be valid" do
+  #     rental.must_be :valid?
+  #   end
   end
+
 end

@@ -5,7 +5,7 @@ class Rental < ApplicationRecord
   # after_commit :decrease_inventory, on: create
 
   # First video
-  validates :valid_check_in_date
+  validate :valid_check_in_date
 
   # validates :check_in_date, inclusion: { in: [true, false] },
                           # exclusion: { in: [nil] }
@@ -36,7 +36,9 @@ class Rental < ApplicationRecord
 
 
     def valid_check_in_date
-      errors.add("Invalid check-in") if !check_in_date && check_in_date > Date.now
+      if !check_in_date.nil? && check_in_date > Date.today
+        errors.add("Invalid check-in")
+      end
       errors.add("Cannot change check-in date") if check_in_date
     end
 

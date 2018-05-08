@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-get_rental:
-  check_out_date: 2018-05-07
+ada_get:
+  check_in_date: nil
   movie: get
   customer: ada
 
-day_rental:
-  check_out_date: 2018-05-07
+grace_day:
+  check_in_date: nil
   movie: day
   customer: grace
