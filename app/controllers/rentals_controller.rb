@@ -5,9 +5,9 @@ class RentalsController < ApplicationController
 		if rental.valid?
 			render json: {
 				id: rental.id,
-				due_date: rental.due_date,
-				checked_out?: rental.checked_out?,
-				overdue?: rental.overdue?
+				due_date: rental.get_due_date,
+				checked_out?: rental.is_checked_out?,
+				overdue?: rental.is_overdue?
 			}, status: :ok
 		else
 			render json: { errors: rental.errors.messages },
