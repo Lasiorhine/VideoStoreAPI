@@ -1,7 +1,5 @@
 class Movie < ApplicationRecord
 
-  attr_accessor :available_inventory
-
   has_many :rentals
   has_many :customers, through: :rentals
 
@@ -11,7 +9,7 @@ class Movie < ApplicationRecord
   validates :inventory, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   def available_inventory
-    #Note:  This is a placeholder method, and it's here just so that Movie's show method will serve the right stuff.  It will have to evolve in later waves.
+    #Note:  This is a placeholder method, and it's here just so that Movie's show method will serve up the right stuff during early-wave tests.  It will have to evolve in later waves.
 
     self.inventory
   end

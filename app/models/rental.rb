@@ -17,7 +17,7 @@ class Rental < ApplicationRecord
   end
 
   def is_checked_out?
-    return !check_out_date.nil?
+    return check_out_date.nil?
   end
   #
   # def self.return_rental

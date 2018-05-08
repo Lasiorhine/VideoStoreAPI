@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get 'movies/show'
 
-  get 'movies/create'
+  post 'movies/create'
 
 	get '/zomg', to: 'application#zomg', as: 'zomg'
 	resources :customers, only: :index
