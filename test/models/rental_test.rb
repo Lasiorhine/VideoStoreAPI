@@ -21,15 +21,19 @@ describe Rental do
       rental.check_in_date.must_be_nil
     end
 
-    it "must have relationships" do
+    it "must have relationships with customer" do
       rental.must_respond_to :customer
       rental.customer.must_equal customers(:ada)
       rental.customer.must_be_kind_of Customer
+      rental.customer.movies.must_include rental.movie # through relationship
+    end
 
+    it "must have relationships with movie" do
       rental.must_respond_to :movie
       rental.movie.must_equal movies(:get)
       rental.movie.must_be_kind_of Movie
-
+      rental.movie.rentals.must_include rental
+      rental.movie.customers.must_include rental.customer # through relationship
     end
 
   # # check_in_date
