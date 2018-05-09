@@ -69,7 +69,7 @@ describe Rental do
 
   end # end of VALIDATION
 
-  # get_check_out_date =============================================================
+  # GET_CHECK_OUT_DATE =========================================================
   describe "get_check_out_date" do
     it "has a get_check_out_date" do
       rental.must_respond_to :get_check_out_date
@@ -82,6 +82,47 @@ describe Rental do
     it "sets its get_check_out_date to be the date created" do
       rental.get_check_out_date.must_equal rental.created_at.to_date
     end
+  end
+
+  # GET_DUE_DATE ===============================================================
+  describe "get_due_date" do
+    it "has a get_due_date" do
+      rental.must_respond_to :get_due_date
+    end
+
+    it "has a get_due_date date that is a Date" do
+      rental.get_due_date.must_be_kind_of Date
+    end
+
+    it "sets its get_due_date to be the date created + 1 week" do
+      rental.get_due_date.must_equal rental.created_at.to_date.next_week
+    end
+  end
+
+  # IS_OVERDUE? ================================================================
+  describe "is_overdue?" do
+    it "has a is_overdue?" do
+      rental.must_respond_to :is_overdue?
+    end
+
+    it "initializes with is_overdue?" do
+      new_rental = Rental.create(info)
+      new_rental.is_overdue?.must_equal false
+    end
+
+    it "sets to true after a week and one day checked out" do
+      new_rental = Rental.create(info)
+      new_rental.update(created_at: Date.yesterday.last_week)
+      new_rental.update(check_in_date: nil)
+      puts new_rental.created_at
+      puts new_rental.get_due_date
+      puts new_rental.check_in_date
+      new_rental.is_overdue?.must_equal true
+    end
+
+    # it "sets its get_due_date to be the date created + 1 week" do
+    #   rental.get_due_date.must_equal rental.created_at.to_date.next_week
+    # end
   end
 
 

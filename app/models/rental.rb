@@ -13,11 +13,13 @@ class Rental < ApplicationRecord
   end
 
   def is_overdue?
+    puts is_checked_out?
+    puts Date.today > get_due_date
     return is_checked_out? && Date.today > get_due_date
   end
 
   def is_checked_out?
-    return get_check_out_date.nil?
+    return check_in_date.nil?
   end
 
   # def self.return_rental
