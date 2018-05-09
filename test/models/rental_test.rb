@@ -4,7 +4,7 @@ describe Rental do
   let(:rental) { rentals(:ada_get) }
   let(:info) {
     {
-      check_in_date: "2018-05-07",
+      check_in_date: Date.current,
       movie: movies(:breakfast),
       customer: customers(:grace)
     }
@@ -112,8 +112,8 @@ describe Rental do
     end
 
     it "initializes with is_overdue?" do
+      info[:check_in_date] = nil
       new_rental = Rental.create(info)
-      new_rental.update(check_in_date: nil)
       new_rental.is_overdue?.must_equal false
     end
 
@@ -136,6 +136,63 @@ describe Rental do
       new_rental.update(check_in_date: Date.current)
       new_rental.is_overdue?.must_equal false
     end
+  end
+
+  # IS_CHECKED_OUT? ============================================================
+  describe "is_checked_out?" do
+    it "has a is_checked_out?" do
+      rental.must_respond_to :is_checked_out?
+    end
+
+    it "initializes with is_checked_out?" do
+      info[:check_in_date] = nil
+      new_rental = Rental.create(info)
+      new_rental.is_checked_out?.must_equal true
+    end
+
+    it "is true when has a return date" do
+      new_rental = Rental.create(info)
+      new_rental.update(check_in_date: Date.current)
+      new_rental.is_checked_out?.must_equal false
+    end
+  end
+
+  # RETURN_RENTAL ==============================================================
+  describe "return_rental" do
+    it "return_rental" do
+      rental.must_respond_to :return_rental
+    end
+
+    it "must lock" do
+      created_at_original = rental.created_at
+      rental.update(check_in_date: Date.yesterday)
+      (created_at_original == rental.created_at).must_equal true
+    end
+
+    it "initializes with return_rental" do
+      new_rental = Rental.create(info)
+      proc {
+        new_rental.return_rental
+      }.must_raise ArgumentError
+    end
+
+    # it "initializes with return_rental" do
+    #   # info[:check_in_date] = nil
+    #   new_rental = Rental.create(info)
+    #   puts "****"
+    #   puts new_rental.check_in_date
+    #   puts !new_rental.is_checked_out?
+    #   new_rental.return_rental
+    #   puts new_rental.is_checked_out?
+    #   rental.valid?.must_equal false
+    #   # new_rental.return_rental.must_equal true
+    # end
+
+    # it "is true when has a return date" do
+    #   new_rental = Rental.create(info)
+    #   new_rental.update(check_in_date: Date.current)
+    #   new_rental.return_rental.must_equal false
+    # end
   end
 
 
