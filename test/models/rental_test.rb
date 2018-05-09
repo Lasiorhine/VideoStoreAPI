@@ -43,7 +43,6 @@ describe Rental do
       rental = Rental.create(info)
       rental.must_be :valid?
       rental.check_in_date.must_be_nil
-
     end
 
     it "must allow check_in_date of today" do
@@ -51,6 +50,13 @@ describe Rental do
       rental = Rental.create(info)
       rental.must_be :valid?
       rental.check_in_date.must_equal Date.today
+    end
+
+    it "must not allow a number as a date" do
+      info[:check_in_date] = 3
+      bad_rental = Rental.create(info)
+      bad_rental.valid?.must_equal false
+      bad_rental.errors.keys.must_equal [:check_in_date]
     end
 
     it "must not allow check in date after today" do
