@@ -8,14 +8,16 @@ describe Movie do
   let(:breakfast) { movies(:breakfast)}
   let(:get) { movies(:get)}
   let(:after) { movies(:after)}
+  let(:wanda) { movies(:wanda)}
 
-  let(:ada) {customers(:ada)}
   let(:grace) {customers(:grace)}
+  let(:ada) {customers(:ada)}
 
+  let(:grace_day_rental) { rentals(:grace_day)}
   let(:ada_day_rental) { rentals(:ada_day)}
   let(:ada_get_rental) { rentals(:ada_get)}
   let(:ada_after_rental) { rentals(:ada_after)}
-  let(:grace_day_rental) { rentals(:grace_day)}
+  let(:ada_wanda_rental) { rentals(:ada_wanda)}
 
   describe "relations" do
 
@@ -137,10 +139,10 @@ describe Movie do
 
         #Validate the test
         breakfast.rentals.must_be_empty
-        breakfast.inventory.must_equal 10
+        breakfast.inventory.must_equal 2
 
         #Assert
-        day.available_inventory.must_equal 10
+        breakfast.available_inventory.must_equal 2
 
       end
 
@@ -148,7 +150,7 @@ describe Movie do
 
         #Validate the test
         day.inventory.must_equal 10
-        day.rentals.must_equal 2
+        day.rentals.count.must_equal 2
 
         ###shows that there are two open rentals
         day.rentals.each do |rental|
@@ -156,31 +158,36 @@ describe Movie do
         end
 
         #Assert
-        day.available_inventory.must_equal 10
+        day.available_inventory.must_equal 8
 
       end
 
       it "returns the correct figure for a given movie with zero copies available" do
 
-        #Validate the test
-
-        breakfast.rentals.must_be_empty
-        breakfast.inventory.must_equal 2
+        #Validate the test and establish baseline
+        wanda.inventory.must_equal 1
+        wanda.rentals.count.must_equal 1
+        rented_wanda = wanda.rentals[0]
+        #### When check_in_date is nil, the movie is still checked out.
+        rented_wanda.check_in_date.must_be_nil
 
         # Assert
-        breakfast.available_inventory.must_equal 2
+        wanda.available_inventory.must_equal 0
+
       end
 
       it "returns the correct figure for a given movie with no current, open rentals, but which has been rented in the past" do
 
+
         #Validate the test
         after.rentals.wont_be_empty
         after.rentals.count.must_equal 1
-        past_after_rental = after.rentals[0]
-        past_after_rental.check_in_date.wont_be_nil
+        closed_after_rental = after.rentals[0]
+        # having a check_in_date meams the movie has been returned.
+        closed_after_rental.check_in_date.wont_be_nil
 
         # Assert
-        after.available_inventory.must_equal 1
+        after.available_inventory.must_equal 12
 
       end
 
