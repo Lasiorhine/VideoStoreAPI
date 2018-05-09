@@ -14,3 +14,8 @@ ada_day:
   check_in_date: nil
   movie: day
   customer: ada
+
+ada_after:
+  check_in_date: 2018-05-03
+  movie: after
+  customer: ada

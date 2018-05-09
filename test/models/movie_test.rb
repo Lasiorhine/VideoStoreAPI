@@ -7,13 +7,15 @@ describe Movie do
   let(:day) { movies(:day)}
   let(:breakfast) { movies(:breakfast)}
   let(:get) { movies(:get)}
+  let(:after) { movies(:after)}
 
   let(:ada) {customers(:ada)}
   let(:grace) {customers(:grace)}
 
-  let(:ada_get_rental) { rentals(:ada_get)}
-  let(:grace_day_rental) { rentals(:grace_day)}
   let(:ada_day_rental) { rentals(:ada_day)}
+  let(:ada_get_rental) { rentals(:ada_get)}
+  let(:ada_after_rental) { rentals(:ada_after)}
+  let(:grace_day_rental) { rentals(:grace_day)}
 
   describe "relations" do
 
@@ -131,19 +133,55 @@ describe Movie do
 
     describe "available_inventory" do
 
-      it "returns the correct figure for a given movie with one or more copies available" do
+      it "returns the correct figure for a given movie when none of the copies are checked out" do
 
+        #Validate the test
+        breakfast.rentals.must_be_empty
+        breakfast.inventory.must_equal 10
+
+        #Assert
+        day.available_inventory.must_equal 10
+
+      end
+
+      it "returns the correct figure for a given movie when multiple copies are checked out" do
+
+        #Validate the test
+        day.inventory.must_equal 10
+        day.rentals.must_equal 2
+
+        ###shows that there are two open rentals
+        day.rentals.each do |rental|
+          rental.check_in_date.must_be_nil
+        end
+
+        #Assert
         day.available_inventory.must_equal 10
 
       end
 
       it "returns the correct figure for a given movie with zero copies available" do
 
-        #This version of this test is sort of a place-holder: Once we get checkout mechanisms working in wave 3 and later, it will have to be dramatically redone.
+        #Validate the test
 
-        breakfast.inventory = 0
+        breakfast.rentals.must_be_empty
+        breakfast.inventory.must_equal 2
 
-        breakfast.available_inventory.must_equal 0
+        # Assert
+        breakfast.available_inventory.must_equal 2
+      end
+
+      it "returns the correct figure for a given movie with no current, open rentals, but which has been rented in the past" do
+
+        #Validate the test
+        after.rentals.wont_be_empty
+        after.rentals.count.must_equal 1
+        past_after_rental = after.rentals[0]
+        past_after_rental.check_in_date.wont_be_nil
+
+        # Assert
+        after.available_inventory.must_equal 1
+
       end
 
     end
