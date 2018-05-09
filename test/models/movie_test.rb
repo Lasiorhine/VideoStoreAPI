@@ -3,25 +3,21 @@ require "test_helper"
 describe Movie do
 
   let(:movie_new) { Movie.new }
-  let(:get) { movies(:get)}
-  let(:breakfast) { movies(:breakfast)}
+
   let(:day) { movies(:day)}
+  let(:breakfast) { movies(:breakfast)}
+  let(:get) { movies(:get)}
+
   let(:ada) {customers(:ada)}
+  let(:grace) {customers(:grace)}
 
-
+  let(:ada_get_rental) { rentals(:ada_get)}
   let(:grace_day_rental) { rentals(:grace_day)}
-  let(:ada_get_rental) { rentals(:ada_day)}
+  let(:ada_day_rental) { rentals(:ada_day)}
 
   describe "relations" do
 
     it "has many rentals" do
-
-      ada_day_rental = Rental.new( {
-        check_in_date: nil,
-        movie: day,
-        customer: ada,
-          }
-        )
 
       day.rentals.count.must_equal 2
       day.rentals[0].must_be_instance_of Rental
@@ -109,6 +105,9 @@ describe Movie do
 
     it "has validation for inventory's status as a postive integer" do
 
+      day.inventory = 2
+      day.valid?.must_equal true
+
       day.inventory = 0
       day.valid?.must_equal true
 
@@ -135,6 +134,7 @@ describe Movie do
       it "returns the correct figure for a given movie with one or more copies available" do
 
         day.available_inventory.must_equal 10
+
       end
 
       it "returns the correct figure for a given movie with zero copies available" do
