@@ -92,6 +92,7 @@ describe Movie do
       day.inventory = -7
       day.valid?.must_equal false
       day.errors.messages.must_include :inventory
+
     end
 
   end
@@ -105,7 +106,6 @@ describe Movie do
       it "returns the correct figure for a given movie with one or more copies available" do
 
         day.available_inventory.must_equal 10
-
       end
 
       it "returns the correct figure for a given movie with zero copies available" do
@@ -115,7 +115,6 @@ describe Movie do
         breakfast.inventory = 0
 
         breakfast.available_inventory.must_equal 0
-
       end
 
     end
