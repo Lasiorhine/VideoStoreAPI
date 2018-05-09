@@ -11,8 +11,18 @@ class Movie < ApplicationRecord
 
 
   def available_inventory
-    #Note:  This is a placeholder method, and it's here just so that Movie's show method will serve up the right stuff during early-wave tests.  It will have to evolve in later waves.
-    self.inventory
+    all_rentals = self.rentals
+    open_rental_count = 0
+    if all_rentals.count == 0
+      return self.inventory
+    else
+      all_rentals.each do |rental|
+        if rental.check_in_date == nil
+          open_rental_count += 1
+        end
+      end
+    end
+    available = self.inventory - open_rental_count
   end
 
   private

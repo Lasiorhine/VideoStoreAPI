@@ -93,11 +93,11 @@ describe MoviesController do
     it "must provide the correct response for a non-existent movie" do
 
       #Arrange
-      unmovie = movies(:after)
+      unmovie = movies(:backbone)
       unmovie.destroy
 
       #Act
-      get movie_url(movies(:after).id)
+      get movie_url(movies(:backbone).id)
 
       #Organize/interpret resulting
       body = JSON.parse(response.body)
