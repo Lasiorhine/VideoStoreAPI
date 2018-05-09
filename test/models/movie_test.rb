@@ -3,10 +3,14 @@ require "test_helper"
 describe Movie do
 
   let(:movie_new) { Movie.new }
-  let(:day) { movies(:day)}
+  let(:get) { movies(:get)}
   let(:breakfast) { movies(:breakfast)}
+  let(:day) { movies(:day)}
   let(:ada) {customers(:ada)}
+
+
   let(:grace_day_rental) { rentals(:grace_day)}
+  let(:ada_get_rental) { rentals(:ada_day)}
 
   describe "relations" do
 
@@ -27,7 +31,14 @@ describe Movie do
     end
 
 
-    it "returns an empty array if it has not been rented" do
+    it "has an empty ActiveRecord relation for 'rentals' if it hasn't even been rented" do
+
+      # Validate the test
+      day.rentals.wont_be_empty
+      get.rentals.wont_be_empty
+
+      #Assert
+      breakfast.rentals.must_be_empty
 
     end
 
