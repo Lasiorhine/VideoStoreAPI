@@ -43,7 +43,6 @@ describe Rental do
       rental = Rental.create(info)
       rental.must_be :valid?
       rental.check_in_date.must_be_nil
-
     end
 
     it "must allow check_in_date of today" do
@@ -51,6 +50,13 @@ describe Rental do
       rental = Rental.create(info)
       rental.must_be :valid?
       rental.check_in_date.must_equal Date.today
+    end
+
+    it "must not allow a number as a date" do
+      info[:check_in_date] = 3
+      bad_rental = Rental.create(info)
+      bad_rental.valid?.must_equal false
+      bad_rental.errors.keys.must_equal [:check_in_date]
     end
 
     it "must not allow check in date after today" do
@@ -69,7 +75,7 @@ describe Rental do
 
   end # end of VALIDATION
 
-  # get_check_out_date =============================================================
+  # GET_CHECK_OUT_DATE =========================================================
   describe "get_check_out_date" do
     it "has a get_check_out_date" do
       rental.must_respond_to :get_check_out_date
@@ -81,6 +87,54 @@ describe Rental do
 
     it "sets its get_check_out_date to be the date created" do
       rental.get_check_out_date.must_equal rental.created_at.to_date
+    end
+  end
+
+  # GET_DUE_DATE ===============================================================
+  describe "get_due_date" do
+    it "has a get_due_date" do
+      rental.must_respond_to :get_due_date
+    end
+
+    it "has a get_due_date date that is a Date" do
+      rental.get_due_date.must_be_kind_of Date
+    end
+
+    it "sets its get_due_date to be the date created + 1 week" do
+      rental.get_due_date.must_equal rental.created_at.to_date.next_week
+    end
+  end
+
+  # IS_OVERDUE? ================================================================
+  describe "is_overdue?" do
+    it "has a is_overdue?" do
+      rental.must_respond_to :is_overdue?
+    end
+
+    it "initializes with is_overdue?" do
+      new_rental = Rental.create(info)
+      new_rental.update(check_in_date: nil)
+      new_rental.is_overdue?.must_equal false
+    end
+
+    it "is still false on the day it's due" do
+      new_rental = Rental.create(info)
+      new_rental.update(created_at: new_rental.get_due_date)
+      new_rental.is_overdue?.must_equal false
+    end
+
+    it "sets to true after a week and one day and checked out" do
+      new_rental = Rental.create(info)
+      new_rental.update(created_at: Date.yesterday.last_week)
+      new_rental.update(check_in_date: nil)
+      new_rental.is_overdue?.must_equal true
+    end
+
+    it "is not overdue if not checked out" do
+      new_rental = Rental.create(info)
+      new_rental.update(created_at: Date.yesterday.last_week)
+      new_rental.update(check_in_date: Date.current)
+      new_rental.is_overdue?.must_equal false
     end
   end
 

@@ -13,7 +13,7 @@ class Customer < ApplicationRecord
 	private
 
 	def date_in_future_or_error
-		if registered_at.nil? || registered_at > DateTime.now
+		if registered_at.nil? || registered_at > DateTime.current
 			# TODO: needed? || (!created_at.nil?  && registered_at > created_at)
 			errors.add(:registered_at, "Invalid registration date")
 		end
