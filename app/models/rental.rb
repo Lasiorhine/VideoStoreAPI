@@ -13,8 +13,6 @@ class Rental < ApplicationRecord
   end
 
   def is_overdue?
-    puts is_checked_out?
-    puts Date.today > get_due_date
     return is_checked_out? && Date.today > get_due_date
   end
 

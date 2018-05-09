@@ -107,22 +107,29 @@ describe Rental do
 
     it "initializes with is_overdue?" do
       new_rental = Rental.create(info)
+      new_rental.update(check_in_date: nil)
       new_rental.is_overdue?.must_equal false
     end
 
-    it "sets to true after a week and one day checked out" do
+    it "is still false on the day it's due" do
+      new_rental = Rental.create(info)
+      new_rental.update(created_at: new_rental.get_due_date)
+      new_rental.is_overdue?.must_equal false
+    end
+
+    it "sets to true after a week and one day and checked out" do
       new_rental = Rental.create(info)
       new_rental.update(created_at: Date.yesterday.last_week)
       new_rental.update(check_in_date: nil)
-      puts new_rental.created_at
-      puts new_rental.get_due_date
-      puts new_rental.check_in_date
       new_rental.is_overdue?.must_equal true
     end
 
-    # it "sets its get_due_date to be the date created + 1 week" do
-    #   rental.get_due_date.must_equal rental.created_at.to_date.next_week
-    # end
+    it "is not overdue if not checked out" do
+      new_rental = Rental.create(info)
+      new_rental.update(created_at: Date.yesterday.last_week)
+      new_rental.update(check_in_date: Date.current)
+      new_rental.is_overdue?.must_equal false
+    end
   end
 
 

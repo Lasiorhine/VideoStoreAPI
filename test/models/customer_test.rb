@@ -76,7 +76,7 @@ describe Customer do
       customer.valid?.must_equal false
       customer.errors.keys.must_equal [:registered_at]
 
-      info[:registered_at] = DateTime.now + 1
+      info[:registered_at] = DateTime.current + 1
       Customer.create(info).valid?.must_equal false
 
       info[:registered_at] = "foo"
@@ -84,7 +84,7 @@ describe Customer do
     end
 
     it "must allow registered_at today or before" do
-      info[:registered_at] = DateTime.now
+      info[:registered_at] = DateTime.current
       Customer.create(info).valid?.must_equal true
 
       info[:registered_at] = DateTime.yesterday
