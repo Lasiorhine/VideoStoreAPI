@@ -56,6 +56,11 @@ describe Movie do
 
       #THIS IS A DRAFT TEST.
 
+      day.release_date = Date.parse("1996-07-04")
+      day.valid?.must_equal true
+      day.errors.messages.wont_include :release_date
+      day.errors.messages.must_be_empty
+
       day.release_date = "Jooon Forth, ninety-six"
       day.valid?.must_equal false
       day.errors.messages.must_include :release_date
@@ -64,10 +69,6 @@ describe Movie do
       day.valid?.must_equal false
       day.errors.messages.must_include :release_date
 
-      day.release_date = Date.parse(1996-07-04)
-      day.valid?.must_equal true
-      day.errors.messages.wont_include :release_date
-      day.errors.messages.must_be_nil
     end
 
     it "has validation for inventory presence" do
