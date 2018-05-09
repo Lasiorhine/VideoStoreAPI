@@ -9,3 +9,8 @@ grace_day:
   check_in_date: nil
   movie: day
   customer: grace
+
+ada_day:
+  check_in_date: nil
+  movie: day
+  customer: ada

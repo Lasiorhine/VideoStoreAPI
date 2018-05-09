@@ -4,14 +4,31 @@ describe Movie do
 
   let(:movie_new) { Movie.new }
   let(:day) { movies(:day)}
-
+  let(:breakfast) { movies(:breakfast)}
+  let(:ada) {customers(:ada)}
+  let(:grace_day_rental) { rentals(:grace_day)}
 
   describe "relations" do
 
     it "has many rentals" do
+
+      ada_day_rental = Rental.new( {
+        check_in_date: nil,
+        movie: day,
+        customer: ada,
+          }
+        )
+
+      day.rentals.count.must_equal 2
+      day.rentals[0].must_be_instance_of Rental
+      day.rentals[0].customer.id.must_equal (customers(:grace).id)
+      day.rentals[1].customer.id.must_equal (customers(:ada).id)
+
     end
 
+
     it "returns an empty array if it has not been rented" do
+
     end
 
   end
@@ -53,8 +70,6 @@ describe Movie do
     end
 
     it "has validation for release_date's status as a Date object" do
-
-      #THIS IS A DRAFT TEST.
 
       day.release_date = Date.parse("1996-07-04")
       day.valid?.must_equal true
@@ -105,8 +120,6 @@ describe Movie do
   describe "methods" do
 
     describe "available_inventory" do
-
-      let(:breakfast) { movies(:breakfast)}
 
       it "returns the correct figure for a given movie with one or more copies available" do
 
