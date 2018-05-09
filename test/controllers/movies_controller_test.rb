@@ -131,32 +131,37 @@ describe MoviesController do
 
     it "creates a new movie when given complete, valid data" do
 
+      #Arrange
       before_count = Movie.all.count
 
-      post movies_path, params: {movie:
+      #Act
+      post movies_path, params: {movie: movie_data}
 
-        { title: "Mothlight",
-          overview: "Three life-changing minutes of dead moths.",
-          release_date: Date.parse('01-01-1963'),
-          inventory: 27,}
-        }
-
+      #Assert / Validate test
       must_respond_with :success
+
+      #Gather and organize result data
       after_count = Movie.all.count
-
       test_movie = Movie.last
-
-      (after_count - before_count).must_equal 1
-
-      test_movie.title.must_equal "Mothlight"
-
       body = JSON.parse(response.body)
+
+      #Assert:
+      #The resulting JSON mast have the correct format and baseline content.
       body.must_be_kind_of Hash
       body.wont_include "errors"
+      body.keys.count.must_equal 2
       body.keys.must_include "id"
-      Movie.find(body["id"]).title.must_equal "Mothlight"
-      body.must_include "ok"
+      body.keys.must_include "ok"
       body["ok"].must_equal true
+      Movie.find(body["id"]).title.must_equal "Mothlight"
+
+      #A new movie object must be created
+      (after_count - before_count).must_equal 1
+
+      #The new object's attributes must contain the correct information.
+      test_movie.title.must_equal "Mothlight"
+      test_movie.overview.must_equal "Three life-changing minutes of dead moths."
+      test_movie.inventory.must_equal 27
 
     end
 
