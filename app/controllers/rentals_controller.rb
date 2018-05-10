@@ -18,7 +18,6 @@ class RentalsController < ApplicationController
 	def checkin
 		rental = Rental.find_by(customer_id: params[:customer_id], movie_id: params[:movie_id])
 		if rental
-			puts rental.check_in_date.inspect
 			if !rental.is_checked_out?
 				render json: { errors: rental.errors.messages },
 					 status: :bad_request

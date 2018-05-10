@@ -31,13 +31,10 @@ class Rental < ApplicationRecord
   end
 
   def return_rental
-    puts "hiiiiii"
-    puts check_in_date.inspect
     if !is_checked_out?
       raise ArgumentError.new("Cannot return an item that isn't checked out")
     end
     self.check_in_date = Date.current
-    puts check_in_date.inspect
   end
 
 private
