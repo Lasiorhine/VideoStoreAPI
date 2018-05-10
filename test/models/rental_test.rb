@@ -171,9 +171,9 @@ describe Rental do
 
     it "initializes with return_rental" do
       new_rental = Rental.create(info)
-      proc {
-        new_rental.return_rental
-      }.must_raise ArgumentError
+      new_rental.return_rental
+      new_rental.save
+      new_rental.errors.keys.must_equal [:check_out]
     end
 
     # it "initializes with return_rental" do

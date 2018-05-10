@@ -3,11 +3,11 @@ class Rental < ApplicationRecord
   belongs_to :movie
 
   attr_readonly :created_at, :customer, :movie#, :check_in_date
+  before_update :cannot_update, on: :return_rental
 
   # before_validation
   validate :valid_get_check_in_date
   # validate :cannot_update, on: :return_rental
-
 
   # Returns the rental checkout date as a Date.
   def get_check_out_date
@@ -31,23 +31,21 @@ class Rental < ApplicationRecord
   end
 
   def return_rental
+    # if !is_checked_out?
+    #   errors.add(:check_out, "Cannot return an item that isn't checked out")
+    # else
+      self.check_in_date = Date.current
+    # end
+  end
+
+  private
+
+  def cannot_update
     if !is_checked_out?
+      puts "hiiiiiii"
       errors.add(:check_out, "Cannot return an item that isn't checked out")
-      # raise ArgumentError.new("Cannot return an item that isn't checked out")
-    else
-    self.check_in_date = Date.current
+    end
   end
-  end
-
-private
-
-def cannot_update
-  puts "boo"
-  if !is_checked_out?
-    errors.add(:check_out, "Cannot return an item that isn't checked out")
-  end
-end
-
 
   # Adds an error message if check_in_date is:
   #   1) not nil,
