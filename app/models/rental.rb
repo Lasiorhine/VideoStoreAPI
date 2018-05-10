@@ -2,7 +2,7 @@ class Rental < ApplicationRecord
   belongs_to :customer
   belongs_to :movie
 
-  attr_readonly :created_at, :customer, :movie, :check_in_date
+  attr_readonly :created_at, :customer, :movie#, :check_in_date
 
   # before_validation
   validate :valid_get_check_in_date
@@ -32,9 +32,11 @@ class Rental < ApplicationRecord
 
   def return_rental
     if !is_checked_out?
-      raise ArgumentError.new("Cannot return an item that isn't checked out")
-    end
-    check_in_date = Date.current
+      errors.add(:check_out, "Cannot return an item that isn't checked out")
+      # raise ArgumentError.new("Cannot return an item that isn't checked out")
+    else
+    self.check_in_date = Date.current
+  end
   end
 
 private
