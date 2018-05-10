@@ -32,9 +32,11 @@ class Rental < ApplicationRecord
 
   def return_rental
     if !is_checked_out?
-      raise ArgumentError.new("Cannot return an item that isn't checked out")
-    end
+      errors.add(:check_out, "Cannot return an item that isn't checked out")
+      # raise ArgumentError.new("Cannot return an item that isn't checked out")
+    else
     self.check_in_date = Date.current
+  end
   end
 
 private
