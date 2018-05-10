@@ -34,8 +34,7 @@ class MoviesController < ApplicationController
       render json: {
         errors: movie.errors.messages,
         ok: false
-      },
-         status: :bad_request
+      }, status: :bad_request
     end
   end
 
