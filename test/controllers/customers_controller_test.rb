@@ -29,7 +29,7 @@ describe CustomersController do
 
 		it "returns JSON with exactly the required fields" do
 
-			required_index_keys = %w(id name movies_checked_out_count phone postal_code registered_at )
+			required_index_keys = %w(id movies_checked_out_count name phone postal_code registered_at )
 			get customers_url
 			body = JSON.parse(response.body)
 			body.each do |customer|

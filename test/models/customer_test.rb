@@ -209,7 +209,7 @@ describe Customer do
 
       it "returns the currect number for a customer who has checked out movies in the past, and who has  current, open rentals" do
 
-        ada.movies_checked_out_count.must_equal 4
+        ada.movies_checked_out_count.must_equal 3
 
       end
 
