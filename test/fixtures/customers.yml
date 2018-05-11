@@ -15,3 +15,21 @@ grace:
   state: GA
   postal_code: 30064
   phone: (770) 951-1599
+
+dorothy:
+  name: Dorothy Vaughan
+  registered_at: Sun, 29 Apr 2018 21:40:20 -0700
+  address: 3 Surd Drive
+  city: Hampton
+  state: VA
+  postal_code: 23668
+  phone: (757) 727-2121
+
+heddy:
+  name: Heddy LaMarr
+  registered_at: Sat, 28 Apr 2018 21:40:20 -0700
+  address: 12 Mullholland Drive
+  city: Los Angeles
+  state: CA
+  postal_code: 90036
+  phone: (323) 922-3441

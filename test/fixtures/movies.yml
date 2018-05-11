@@ -55,3 +55,13 @@ lights:
   overview: The Little Tramp's most heartbreaking work. This cut lacks the legendary drain-poking scene.
   release_date: 1931-03-07
   inventory: 1
+fast:
+  title: Fast, Cheap, & Out-Of-Control
+  overview: Errol Morris spotlights a collection of charming obsessives.
+  release_date: 1997-09-07
+  inventory: 2
+paris:
+  title: Paris is Burning
+  overview: profoundly influential documentary about the underground, gay ball scene in NYC
+  release_date: 1991-08-16
+  inventory: 1

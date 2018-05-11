@@ -187,4 +187,39 @@ describe Customer do
     end
 
   end # end of describe "validate"
+
+  describe "methods" do
+
+    let(:ada) { customers(:ada) }
+    let(:grace) { customers(:grace) }
+    let(:dorothy) { customers(:dorothy) }
+    let(:heddy) { customers(:heddy) }
+
+    describe "movies_checked_out_count" do
+
+      it "must return zero for a customer who has never checked out a movie" do
+
+        heddy.movies_checked_out_count.must_equal 0
+      end
+
+      it "returns zero for a customer who has checked out movies in the past, but who has no current, open rentals." do
+
+        dorothy.movies_checked_out_count.must_equal 0
+      end
+
+      it "returns the currect number for a customer who has checked out movies in the past, and who has  current, open rentals" do
+
+        ada.movies_checked_out_count.must_equal 4
+
+      end
+
+      it "returns the currect number for a customer who has one or more current, open rentals, but who has never returned anything" do
+
+        grace.movies_checked_out_count.must_equal 1
+
+      end
+
+    end
+
+  end
 end
