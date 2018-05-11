@@ -135,7 +135,7 @@ describe MoviesController do
       before_count = Movie.all.count
 
       #Act
-      post movies_path, params: {movie: movie_data}
+      post movies_path, params: movie_data
 
       #Assert / Validate test
       must_respond_with :success
@@ -170,7 +170,7 @@ describe MoviesController do
       movie_data[:title] = nil
 
       proc {
-        post movies_url, params: {movie: movie_data}
+        post movies_url, params: movie_data
       }.must_change 'Movie.count', 0
       must_respond_with :bad_request
 
