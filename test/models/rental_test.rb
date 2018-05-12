@@ -4,7 +4,7 @@ describe Rental do
   let(:rental) { rentals(:ada_get) }
   let(:info) {
     {
-      check_in_date: Date.current,
+      check_in_date: Date.today,
       movie: movies(:breakfast),
       customer: customers(:grace)
     }
@@ -163,36 +163,23 @@ describe Rental do
       rental.must_respond_to :return_rental
     end
 
-    it "must lock" do
-      created_at_original = rental.created_at
-      rental.update(check_in_date: Date.yesterday)
-      (created_at_original == rental.created_at).must_equal true
+    it "must throw error if already checked out" do
+      proc {
+        new_rental = Rental.create(info)
+        new_rental.return_rental
+        rental.valid?.must_equal false
+      }.must_raise ArgumentError
     end
 
-    it "initializes with return_rental" do
-      new_rental = Rental.create(info)
-      new_rental.return_rental
-      new_rental.save
-      new_rental.errors.keys.must_equal [:check_out]
+    it "must set checkin date if returned" do
+        info[:check_in_date] = nil
+        new_rental = Rental.create(info)
+        new_rental.return_rental
+        rental.must_be :valid?
+        new_rental.check_in_date.must_equal Date.current
     end
 
-    # it "initializes with return_rental" do
-    #   # info[:check_in_date] = nil
-    #   new_rental = Rental.create(info)
-    #   puts "****"
-    #   puts new_rental.check_in_date
-    #   puts !new_rental.is_checked_out?
-    #   new_rental.return_rental
-    #   puts new_rental.is_checked_out?
-    #   rental.valid?.must_equal false
-    #   # new_rental.return_rental.must_equal true
-    # end
 
-    # it "is true when has a return date" do
-    #   new_rental = Rental.create(info)
-    #   new_rental.update(check_in_date: Date.current)
-    #   new_rental.return_rental.must_equal false
-    # end
   end
 
 
